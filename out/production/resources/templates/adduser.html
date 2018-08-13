@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <meta charset="UTF-8">
+        <link th:href="@{/css/toplevel.css}" rel="stylesheet" type="text/css">
+        <title th:text="#{messages.application.title}"/></title>
+    </head>
+    <body>
+        <div class="margin">
+            <h3 th:text="#{messages.application.title}"/>
+
+            <a th:href="@{/home}"><label th:text="#{messages.home.homelink}"/></a> | <a th:href="@{/adduser}"><label th:text="#{messages.admin.adduserlink}"/></a> | <a th:href="@{/deleteuser}"><label th:text="#{messages.admin.removeuserlink}"/></a>
+
+            <hr/>
+        </div>
+
+        <form class="margin" th:action="@{/adduser/save}" th:object="${addUserForm}" method="post">
+          <table>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td><strong><label th:text="#{messages.admin.adduser.heading}"/></strong></td></tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+              <td>
+                <label th:text="#{messages.admin.adduser.username}"/>
+              </td>
+              <td>
+                <input type="text" id="username" name="username" th:field="*{username}"/>
+                <div th:if="${#fields.hasErrors('username')}">
+                  <td>&nbsp;</td>
+                  <td th:errors="*{username}">Username Error</td>
+                </div>
+                <div th:if="${usernameError}">
+                  <td>&nbsp;</td>
+                  <td><label th:text="#{messages.admin.adduser.usernametakenerror}"/></td>
+                </div>
+              </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+              <td>
+                <label th:text="#{messages.admin.adduser.password}"/>
+              </td>
+              <td>
+                <input type="password" id="password" name="password" th:field="*{password}"/>
+                <div th:if="${#fields.hasErrors('password')}">
+                  <td>&nbsp;</td>
+                  <td th:errors="*{password}">Password Error</td>
+                </div>
+              </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+              <td>
+                <label th:text="#{messages.admin.adduser.role}"/>
+              </td>
+              <td>
+                <select type="select" id="role" name="role" th:field="*{role}">
+                  <option value="">Please Select...</option>
+                  <option th:each="role : ${roles}" th:text="${role}" th:value="${role}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('role')}">
+                  <td>&nbsp;</td>
+                  <td th:errors="*{role}">Role Error</td>
+                </div>
+              </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+              <td>
+                <label th:text="#{messages.admin.adduser.firstname}"/>
+              </td>
+              <td>
+                <input type="text" id="firstname" name="firstname" th:field="*{firstname}"/>
+                <div th:if="${#fields.hasErrors('firstname')}">
+                  <td>&nbsp;</td>
+                  <td th:errors="*{firstname}">Firstname Error</td>
+                </div>
+              </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+              <td>
+                <label th:text="#{messages.admin.adduser.lastname}"/>
+              </td>
+              <td>
+                <input type="text" id="lastname" name="lastname" th:field="*{lastname}"/>
+                <div th:if="${#fields.hasErrors('lastname')}">
+                  <td>&nbsp;</td>
+                  <td th:errors="*{lastname}">Lastname Error</td>
+                </div>
+              </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td><input type="submit" value="" th:attr="value=#{messages.admin.adduser.submit}"/></td></tr>
+          </table>
+        </form>
+    </body>
+</html>

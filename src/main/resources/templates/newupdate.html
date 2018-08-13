@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <link th:href="@{/css/toplevel.css}" rel="stylesheet" type="text/css">
+    <title th:text="#{messages.application.title}"/>
+  </head>
+  <body>
+    <div class="margin">
+      <div th:replace="header :: header"></div>
+
+      <form th:action="@{/newupdate/save}" th:object="${newUpdateForm}" method="post">
+        <table>
+          <tr><td>&nbsp;</td></tr>
+          <tr><td><strong><label th:text="#{messages.newupdate.heading}"/></td></tr>
+          <tr><td>&nbsp;</td></tr>
+          <tr>
+            <td><input type="text" id="title" name="title" th:field="*{title}" placeholder="" th:attr="placeholder=#{messages.newupdate.updatetitleplaceholder}"/></td>
+            <div th:if="${#fields.hasErrors('title')}">
+              <td>&nbsp;</td>
+              <td th:errors="*{title}">Title Error</td>
+            </div>
+          </tr>
+          <tr><td>&nbsp;</td></tr>
+          <tr>
+            <td><textarea rows="8" cols="50" name="details" th:field="*{details}" placeholder="" th:attr="placeholder=#{messages.newupdate.messageplaceholder}"></textarea></td>
+            <div th:if="${#fields.hasErrors('details')}">
+              <td>&nbsp;</td>
+              <td th:errors="*{details}">Details Error</td>
+            </div>
+          </tr>
+          <tr><td>&nbsp;</td></tr>
+          <tr>
+            <td><input type="text" id = "tags" name="tags" th:field="*{tags}" placeholder="" th:attr="placeholder=#{messages.newupdate.tagsplaceholder}"/></td>
+            <div th:if="${#fields.hasErrors('tags')}">
+              <td>&nbsp;</td>
+              <td th:errors="*{tags}">Tags Error</td>
+            </div>
+            <div th:if="${usernameTagError}">
+              <td>&nbsp;</td>
+              <td><label th:text="#{messages.newupdate.usernametagerror}"/></td>
+            </div>
+          </tr>
+          <tr><td>&nbsp;</td></tr>
+          <tr><td><label th:text="#{messages.newupdate.date}"/><label id="date"></label></td></tr>
+          <tr><td>&nbsp;</td></tr>
+          <tr><td><input type="submit" value="" th:attr="value=#{messages.newupdate.submit}"/></td></tr>
+        </table>
+      </form>
+
+      <script src="../js/showdate.js"></script
+
+    </div>
+  </body>
+</html>

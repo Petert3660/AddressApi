@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head></head>
+<body>
+    <div th:fragment="actualnavlinks">
+      <a th:href="@{/home}"><label th:text="#{messages.home.homelink}"/></a> | <a th:href="@{/newupdate}"><label th:text="#{messages.home.homeupdatelink}"/></a> | <a th:href="@{/tags}"><label th:text="#{messages.home.tagslink}"/></a> | <a th:href="@{/myupdates}"><label th:text="#{messages.home.myupdateslink}"/></a>
+    </div>
+
+    <div th:fragment="adminnavlinks">
+      <a th:href="@{/home}"><label th:text="#{messages.home.homelink}"/></a> | <a th:href="@{/newupdate}"><label th:text="#{messages.home.homeupdatelink}"/></a> | <a th:href="@{/tags}"><label th:text="#{messages.home.tagslink}"/></a> | <a th:href="@{/myupdates}"><label th:text="#{messages.home.myupdateslink}"/></a> | <a th:href="@{/admin}"><label th:text="#{messages.home.adminlink}"/></a>
+    </div>
+
+    <div th:fragment="actualadminnavlinks">
+      <a th:href="@{/home}"><label th:text="#{messages.home.homelink}"/></a> | <a th:href="@{/adduser}"><label th:text="#{messages.admin.adduserlink}"/></a> | <a th:href="@{/deleteuser}"><label th:text="#{messages.admin.removeuserlink}"/></a>
+    </div>
+</body>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="adminheader">
+  <h3 th:text="#{messages.application.title}"/>
+
+  <table>
+    <tr>
+      <td><div th:replace="navlinks :: actualadminnavlinks"></div></td>
+      <td>
+        <div>&nbsp;&nbsp;&nbsp;<small>(Logged in as: <label th:text="${userName}"/>)</small></div>
+      </td>
+      <form th:action="@{/logout}" method="post">
+        <td>
+          <div>&nbsp;&nbsp;&nbsp;<input type="submit" value="" th:attr="value=#{messages.logout.submit}"/></div>
+        </td>
+      </form>
+      <form th:action="@{/home}" method="post">
+        <td>
+          <div>&nbsp;&nbsp;&nbsp;<input type="submit" value="" th:attr="value=#{messages.admin.shutdown.submit}"/></div>
+        </td>
+      </form>
+    </tr>
+  </table>
+
+  <hr/>
+</div>
+</body>
+</html>

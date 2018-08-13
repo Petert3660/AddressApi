@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+          xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <link th:href="@{/css/toplevel.css}" rel="stylesheet" type="text/css">
+        <title th:text="#{messages.application.title}"/>
+    </head>
+    <body>
+        <div class="margin">
+            <h3 th:text="#{messages.application.title}"/>
+
+            <form th:action="@{/login}" method="post">
+                <table>
+                    <tr><td><label th:text="#{messages.login.signin}"/></td></tr>
+                    <tr><td>&nbsp;</td></tr>
+                    <tr><td><label th:text="#{messages.login.username}"/></td><td>&nbsp;</td><td><input type="text" name="username"/></td>
+                        <td>&nbsp;</td><td>
+                        <td th:if="${param.error}">
+                            <div th:text="#{messages.error.login.invalid}"/>
+                        </td>
+                        <td th:if="${param.logout}">
+                            <div th:text="#{messages.logout.success}"/>
+                        </td>
+                    </tr>
+                    <tr><td>&nbsp;</td></tr>
+                    <tr><td><label th:text="#{messages.login.password}"/></td><td>&nbsp;</td><td><input type="password" name="password"/></td></tr>
+                    <tr><td>&nbsp;</td></tr>
+                    <tr><td><input type="submit" value="" th:attr="value=#{messages.login.submit}"/></td></tr>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>

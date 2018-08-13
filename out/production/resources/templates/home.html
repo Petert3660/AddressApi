@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <link th:href="@{/css/toplevel.css}" rel="stylesheet" type="text/css">
+        <title th:text="#{messages.application.title}"/>
+    </head>
+    <body>
+        <div class="margin">
+            <h3 th:text="#{messages.application.title}"/>
+
+            <div th:if="${userIsAdmin}">
+                <a th:href="@{/home}"><label th:text="#{messages.home.homelink}"/></a> | <a th:href="@{/newupdate}"><label th:text="#{messages.home.homeupdatelink}"/></a> | <a th:href="@{/tags}"><label th:text="#{messages.home.tagslink}"/></a> | <a th:href="@{/myupdates}"><label th:text="#{messages.home.myupdateslink}"/></a> | <a th:href="@{/admin}"><label th:text="#{messages.home.adminlink}"/></a>
+            </div>
+
+            <div th:if="${!userIsAdmin}">
+                <a th:href="@{/home}"><label th:text="#{messages.home.homelink}"/></a> | <a th:href="@{/newupdate}"><label th:text="#{messages.home.homeupdatelink}"/></a> | <a th:href="@{/tags}"><label th:text="#{messages.home.tagslink}"/></a> | <a th:href="@{/myupdates}"><label th:text="#{messages.home.myupdateslink}"/></a>
+            </div>
+
+            <hr/>
+
+            <table>
+                <tr><td>&nbsp;</td></tr>
+                <tr><td><strong><label th:text="#{messages.home.heading}"/></strong></td></tr>
+            </table>
+
+            <table>
+                <div th:each="update : ${updates}">
+                    <tr><td><hr/></td></tr>
+                    <tr>
+                        <td>
+                            <strong>Posted by: </strong><label th:text="${update.username}"/> at <label th:text="${update.createdAtTimeAsString}"/> on <label th:text="${update.createdAtAsString}"/><br><br/>
+                            <i><label th:text="${update.tags}"/></i>: <strong><label th:text="${update.title}"/></strong><br/><br>
+                            <label th:text="${update.details}"/>
+                        </td>
+                        <td th:if="${userIsAdmin}">
+                            <form th:action="@{/myupdates/removepost}" th:object="${removalForm}" method="post">
+                                <input type="hidden" id="buttonId" name="buttonId" th:attr="value=${update.id}"/>
+                                <input type="submit" value="" th:attr="value=#{messages.admin.removebuttontext}"/>
+                            </form>
+                        </td>
+                    </tr>
+                </div>
+                <tr><td><hr/></td></tr>
+            </table>
+
+            <form th:action="@{/logout}" method="post">
+                <table>
+                    <tr><td>&nbsp;</td></tr>
+                    <tr><td><input type="submit" value="" th:attr="value=#{messages.logout.submit}"/></td></tr>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>

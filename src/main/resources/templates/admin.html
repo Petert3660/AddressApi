@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <meta charset="UTF-8">
+        <link th:href="@{/css/toplevel.css}" rel="stylesheet" type="text/css">
+        <title th:text="#{messages.application.title}"/></title>
+    </head>
+    <body>
+      <div class="margin">
+        <div th:replace="adminheader :: adminheader"></div>
+
+        <table>
+            <tr><td>&nbsp;</td></tr>
+                <label th:text="#{messages.admin.versionmessage(${version})}"/>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+                <div th:if="${addSuccess}">
+                    <td>&nbsp;</td>
+                    <td><label th:text="#{messages.admin.adduser.success}"/></td>
+                </div>
+            </tr>
+            <tr>
+                <div th:if="${deleteSuccess}">
+                    <td>&nbsp;</td>
+                    <td><label th:text="#{messages.admin.deleteuser.success}"/></td>
+                </div>
+            </tr>
+        </table>
+      </div>
+    </body>
+</html>

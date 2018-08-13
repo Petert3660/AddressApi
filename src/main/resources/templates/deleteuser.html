@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <meta charset="UTF-8">
+        <link th:href="@{/css/toplevel.css}" rel="stylesheet" type="text/css">
+        <title th:text="#{messages.application.title}"/></title>
+    </head>
+    <body>
+        <div class="margin">
+            <div th:replace="adminheader :: adminheader"></div>
+        </div>
+
+        <form class="margin" th:action="@{/deleteuser/delete}" th:object="${deleteUserForm}" method="post">
+            <table>
+                <tr><td>&nbsp;</td></tr>
+                <tr><td><strong><label th:text="#{messages.admin.deleteuser.heading}"/></strong></td></tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td>
+                        <label th:text="#{messages.admin.deleteuser.select}"/>
+                    </td>
+                    <td>
+                        <select type="select" id="username" name="username" th:field="*{username}">
+                            <option value="">Please Select...</option>
+                            <option th:each="username : ${usernames}" th:text="${username}" th:value="${username}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('username')}">
+                            <td>&nbsp;</td>
+                            <td th:errors="*{username}">Username Error</td>
+                        </div>
+                        <div th:if="${usernameError}">
+                            <td>&nbsp;</td>
+                            <td><label th:text="#{messages.admin.deleteuser.usernamenotselectederror}"/></td>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr><td><input type="submit" value="" th:attr="value=#{messages.admin.deleteuser.submit}"/></td></tr>
+            </table>
+        </form>
+    </body>
+</html>

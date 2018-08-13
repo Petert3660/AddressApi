@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <link th:href="@{/css/toplevel.css}" rel="stylesheet" type="text/css">
+        <title th:text="#{messages.application.title}"/>
+    </head>
+    <body>
+        <div class="margin">
+            <div th:replace="header :: header"></div>
+
+            <table>
+                <tr><td>&nbsp;</td></tr>
+                <tr><td><strong><label th:text="#{messages.home.heading}"/></strong></td></tr>
+
+            </table>
+
+            <hr/>
+
+            <table>
+                <tr><td><strong><label th:text="#{messages.home.heading.today}"/></strong></td></tr>
+                <div th:each="update : ${updates}">
+                    <tr><td><hr/></td></tr>
+                    <tr>
+                        <td>
+                            <strong>Posted by: </strong><label th:text="${update.username}"/> at <label th:text="${update.createdAtTimeAsString}"/> on <label th:text="${update.createdAtAsString}"/><br><br/>
+                            <i><label th:text="${update.tags}"/></i>: <strong><label th:text="${update.title}"/></strong><br/><br>
+                            <label th:text="${update.details}"/>
+                        </td>
+                        <td th:if="${userIsAdmin}">
+                            <form th:action="@{/myupdates/removepost}" th:object="${removalForm}" method="post">
+                                <input type="hidden" id="buttonId" name="buttonId" th:attr="value=${update.id}"/>
+                                <input type="submit" value="" th:attr="value=#{messages.admin.removebuttontext}"/>
+                            </form>
+                        </td>
+                    </tr>
+                </div>
+                <tr><td><hr/></td></tr>
+                <tr><td><strong><label th:text="#{messages.home.heading.older}"/></strong></td></tr>
+                <div th:each="olderupdate : ${olderupdates}">
+                    <tr><td><hr/></td></tr>
+                    <tr>
+                        <td>
+                            <strong>Posted by: </strong><label th:text="${olderupdate.username}"/> at <label th:text="${olderupdate.createdAtTimeAsString}"/> on <label th:text="${olderupdate.createdAtAsString}"/><br><br/>
+                            <i><label th:text="${olderupdate.tags}"/></i>: <strong><label th:text="${olderupdate.title}"/></strong><br/><br>
+                            <label th:text="${olderupdate.details}"/>
+                        </td>
+                        <td th:if="${userIsAdmin}">
+                            <form th:action="@{/myupdates/removepost}" th:object="${removalForm}" method="post">
+                                <input type="hidden" id="buttonId" name="buttonId" th:attr="value=${olderupdate.id}"/>
+                                <input type="submit" value="" th:attr="value=#{messages.admin.removebuttontext}"/>
+                            </form>
+                        </td>
+                    </tr>
+                </div>
+            </table>
+        </div>
+    </body>
+</html>

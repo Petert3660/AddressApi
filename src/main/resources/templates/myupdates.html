@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8">
+  <link href="css/toplevel.css" rel="stylesheet" type="text/css">
+  <title th:text="#{messages.application.title}"/>
+</head>
+<body>
+  <div class="margin">
+    <div th:replace="header :: header"></div>
+
+    <table>
+      <tr><td>&nbsp;</td></tr>
+      <tr><td><strong><label th:text="#{messages.myupdates.heading}"/></strong></td></tr>
+    </table>
+
+    <table>
+      <div th:each="update : ${updates}">
+        <tr><td><hr/></td></tr>
+        <tr>
+          <td>
+            <strong>Posted by: </strong><label th:text="${update.username}"/>  at <label th:text="${update.createdAtTimeAsString}"/> on <label th:text="${update.createdAtAsString}"/><br><br/>
+            <i><label th:text="${update.tags}"/></i>: <strong><label th:text="${update.title}"/></strong><br/><br>
+            <label th:text="${update.details}"/>
+          </td>
+        </tr>
+      </div>
+      <tr><td><hr/></td></tr>
+    </table>
+  </div>
+</body>
+</html>

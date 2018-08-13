@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <title th:text="#{messages.application.title}"/>
+</head>
+<body>
+  <h3 th:text="#{messages.application.title}"/>
+
+  <a th:href="@{/home}"><label th:text="#{messages.home.homelink}"/></a> | <a th:href="@{/newupdate}"><label th:text="#{messages.home.homeupdatelink}"/></a> | <a th:href="@{/tags}"><label th:text="#{messages.home.tagslink}"/></a> | <a th:href="@{/myupdates}"><label th:text="#{messages.home.myupdateslink}"/></a>
+
+</body>
+</html>
