@@ -20,13 +20,14 @@ public class AddressEntity {
     private String county;
     private String country;
     private String postCode;
+    private boolean primaryAddress;
 
     public AddressEntity() {
         super();
     }
 
     public AddressEntity(Long userId, String houseNameNumber, String addressLine1, String addressLine2, String addressLine3,
-        String addressLine4, String county, String country, String postCode) {
+        String addressLine4, String county, String country, String postCode, boolean primaryAddress) {
         this.userId = userId;
         this.houseNameNumber = houseNameNumber;
         this.addressLine1 = addressLine1;
@@ -36,6 +37,7 @@ public class AddressEntity {
         this.county = county;
         this.country = country;
         this.postCode = postCode;
+        this.primaryAddress = primaryAddress;
     }
 
     public Long getId() {
@@ -116,5 +118,13 @@ public class AddressEntity {
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
+    }
+
+    public boolean isPrimaryAddress() {
+        return primaryAddress;
+    }
+
+    public void setPrimaryAddress(boolean primaryAddress) {
+        this.primaryAddress = primaryAddress;
     }
 }

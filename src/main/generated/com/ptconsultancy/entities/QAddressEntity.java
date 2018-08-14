@@ -37,6 +37,8 @@ public class QAddressEntity extends EntityPathBase<AddressEntity> {
 
     public final StringPath postCode = createString("postCode");
 
+    public final BooleanPath primaryAddress = createBoolean("primaryAddress");
+
     public final NumberPath<Long> userId = createNumber("userId", Long.class);
 
     public QAddressEntity(String variable) {

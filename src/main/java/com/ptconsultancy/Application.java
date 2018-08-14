@@ -112,7 +112,7 @@ public class Application implements CommandLineRunner {
                 if (!StringUtils.isEmpty(prop)) {
                     String[] addressDetails = prop.split(", ");
                     addressRepository.save(new AddressEntity(Long.parseLong(addressDetails[0]), addressDetails[1], addressDetails[2], addressDetails[3],
-                        addressDetails[4], addressDetails[5], addressDetails[6], addressDetails[7], addressDetails[8]));
+                        addressDetails[4], addressDetails[5], addressDetails[6], addressDetails[7], addressDetails[8], true));
                 }
             } while (!StringUtils.isEmpty(prop));
         }
