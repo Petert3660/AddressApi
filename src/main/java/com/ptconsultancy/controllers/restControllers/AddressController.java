@@ -49,11 +49,21 @@ public class AddressController {
     @RequestMapping(path="/savePrimaryAddress/{userId}/{password}", method=RequestMethod.POST)
     public void setPrimaryAddress(@RequestBody() Address address, @PathVariable String userId, @PathVariable String password) {
 
-        AddressEntity addressEntity = new AddressEntity(address.getUserId(), address.getHouseNameNumber(), address.getAddressLine1(), address.getAddressLine2(),
-            address.getAddressLine3(), address.getAddressLine4(), address.getCounty(), address.getCountry(), address.getPostCode(), true);
+        boolean primaryAddress = false;
+        for (AddressEntity entity : addressEntityRepository.findByUserId(address.getUserId())) {
+            primaryAddress = entity.isPrimaryAddress();
+            if (primaryAddress) {
+                break;
+            }
+        }
 
-        if (userId.equals(propertiesHandler.getProperty("auth.addressapi.userid")) && password.equals(propertiesHandler.getProperty("auth.addressapi.password"))) {
-            addressEntityRepository.save(addressEntity);
+        if (!primaryAddress) {
+            AddressEntity addressEntity = new AddressEntity(address.getUserId(), address.getHouseNameNumber(), address.getAddressLine1(), address.getAddressLine2(),
+                address.getAddressLine3(), address.getAddressLine4(), address.getCounty(), address.getCountry(), address.getPostCode(), true);
+
+            if (userId.equals(propertiesHandler.getProperty("auth.addressapi.userid")) && password.equals(propertiesHandler.getProperty("auth.addressapi.password"))) {
+                addressEntityRepository.save(addressEntity);
+            }
         }
     }
 
