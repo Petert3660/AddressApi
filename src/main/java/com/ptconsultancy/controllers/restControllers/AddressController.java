@@ -4,6 +4,7 @@ import com.ptconsultancy.datamodels.Address;
 import com.ptconsultancy.entities.AddressEntity;
 import com.ptconsultancy.repositories.AddressEntityRepository;
 import com.ptconsultancy.utilities.PropertiesHandler;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,10 +25,10 @@ public class AddressController {
         this.propertiesHandler = propertiesHandler;
     }
 
-    @RequestMapping(path="/getAddress/{userId}", method=RequestMethod.GET)
-    public AddressEntity getAddress(@PathVariable String userId) {
+    @RequestMapping(path="/getAddress/{addressId}", method=RequestMethod.GET)
+    public AddressEntity getAddress(@PathVariable String addressId) {
 
-        return addressEntityRepository.findByUserId(Long.parseLong(userId)).get(0);
+        return addressEntityRepository.findByUserId(Long.parseLong(addressId)).get(0);
     }
 
     @RequestMapping(path="/saveAddress/{userId}/{password}", method=RequestMethod.POST)
@@ -38,6 +39,17 @@ public class AddressController {
 
         if (userId.equals(propertiesHandler.getProperty("auth.addressapi.userid")) && password.equals(propertiesHandler.getProperty("auth.addressapi.password"))) {
             addressEntityRepository.save(addressEntity);
+        }
+    }
+
+    @RequestMapping(path="/deleteAddress/{userId}/{password}/{addressId}", method=RequestMethod.DELETE)
+    public void deleteAddress(@PathVariable String userId, @PathVariable String password, @PathVariable String addressId) {
+
+        if (userId.equals(propertiesHandler.getProperty("auth.addressapi.userid")) && password.equals(propertiesHandler.getProperty("auth.addressapi.password"))) {
+            List<AddressEntity> entities = addressEntityRepository.findByUserId(Long.parseLong(addressId));
+            if (entities.size() == 1) {
+                addressEntityRepository.delete(entities.get(0));
+            }
         }
     }
 }
