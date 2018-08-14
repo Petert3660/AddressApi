@@ -4,6 +4,7 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        mavenLocal()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
@@ -24,6 +25,7 @@ apply plugin: 'io.spring.dependency-management'
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 sourceCompatibility = 1.8
@@ -39,6 +41,7 @@ dependencies {
     compile("org.springframework:spring-jdbc")
     compile("com.h2database:h2")
     compile("com.querydsl:querydsl-apt:4.1.2:jpa")
+    compile files("C:/Users/thomsonp/.m2/repository/ptconsultancy/Domain/Domain.jar")
 
     compile("mysql:mysql-connector-java:8.0.11")
 
