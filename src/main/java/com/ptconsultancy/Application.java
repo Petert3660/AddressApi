@@ -1,11 +1,13 @@
 package com.ptconsultancy;
 
-import com.ptconsultancy.admin.BuildVersion;
+import com.ptconsultancy.admin.adminsupport.BuildVersion;
 import com.ptconsultancy.entities.AddressEntity;
 import com.ptconsultancy.repositories.AddressEntityRepository;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +19,12 @@ import org.thymeleaf.util.StringUtils;
 @SpringBootApplication
 @PropertySource("classpath:application.properties")
 public class Application implements CommandLineRunner {
+
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+
+    private static final String PROPS_FILENAME = "application";
+    private static final String SERVER_HOST = "spring.data.rest.base-path";
+    private static final String SERVER_PORT_PROPERTY = "server.port";
 
     @Autowired
     private Environment env;
@@ -38,11 +46,18 @@ public class Application implements CommandLineRunner {
     }
 
     private void outputMessage() {
-        String serverPort = env.getProperty("server.port");
+        String hostname = env.getProperty(SERVER_HOST) + ":";
+        String serverPort = env.getProperty(SERVER_PORT_PROPERTY);
         System.out.println("************************************************************************");
-        System.out.println("* AddressApi, Version: " + BuildVersion.getBuildVersion());
-        System.out.println("************************************************************************");
-        System.out.println("* AddressApi is now running on:- localhost:" + serverPort);
+        if (BuildVersion.getProjectTitle() != null && BuildVersion.getBuildVersion() != null) {
+            System.out.println("* " + BuildVersion.getProjectTitle() + ", Version: " + BuildVersion.getBuildVersion());
+            System.out.println("************************************************************************");
+        }
+        if (BuildVersion.getProjectTitle() != null) {
+            System.out.println("* " + BuildVersion.getProjectTitle() + " is now running on:- " + hostname + serverPort);
+        } else {
+            System.out.println("* This application is now running on:- " + hostname + serverPort);
+        }
         System.out.println("************************************************************************");
     }
 
