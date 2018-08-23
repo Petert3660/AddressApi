@@ -8,7 +8,4 @@ public class ControllerConstants {
     public static final int TOKEN_LENGTH = 20;
     public static final int TOKEN_MODE = 1;
     public static final String NO_TOKEN_MESSAGE = "Cannot issue a new token";
-
-    public static final String ADDRESS_ID_KEY = "auth.addressapi.userid";
-    public static final String ADDRESS_PASS_KEY = "auth.addressapi.password";
 }

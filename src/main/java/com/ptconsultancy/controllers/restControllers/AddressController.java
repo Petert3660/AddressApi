@@ -75,7 +75,7 @@ public class AddressController {
                 AddressEntity addressEntity = new AddressEntity(address.getUserId(), address.getHouseNameNumber(), address.getAddressLine1(), address.getAddressLine2(),
                     address.getAddressLine3(), address.getAddressLine4(), address.getCounty(), address.getCountry(), address.getPostCode(), true);
 
-                if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ADDRESS_ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.ADDRESS_PASS_KEY))) {
+                if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.PASS_KEY))) {
                     addressEntityRepository.save(addressEntity);
                 }
             }
@@ -89,7 +89,7 @@ public class AddressController {
             AddressEntity addressEntity = new AddressEntity(address.getUserId(), address.getHouseNameNumber(), address.getAddressLine1(), address.getAddressLine2(),
                 address.getAddressLine3(), address.getAddressLine4(), address.getCounty(), address.getCountry(), address.getPostCode(), false);
 
-            if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ADDRESS_ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.ADDRESS_PASS_KEY))) {
+            if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.PASS_KEY))) {
                 addressEntityRepository.save(addressEntity);
             }
         }
@@ -99,7 +99,7 @@ public class AddressController {
     public void deleteAddress(@PathVariable String userId, @PathVariable String password, @PathVariable String addressId, @PathVariable String token) {
 
         if (token.equals(securityTokenManager.getValueWithReset())) {
-            if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ADDRESS_ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.ADDRESS_PASS_KEY))) {
+            if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.PASS_KEY))) {
                 List<AddressEntity> entities = addressEntityRepository.findByUserId(Long.parseLong(addressId));
                 if (entities.size() == 1) {
                     addressEntityRepository.delete(entities.get(0));
@@ -111,7 +111,7 @@ public class AddressController {
     @RequestMapping(path="/address/getadminid/{token}", method=RequestMethod.GET)
     public String getAdminId(@PathVariable String token) {
         if (token.equals(securityTokenManager.getValueWithReset())) {
-            return propertiesHandler.getProperty(ControllerConstants.ADDRESS_ID_KEY);
+            return propertiesHandler.getProperty(ControllerConstants.ID_KEY);
         } else {
             return ControllerConstants.NO_TOKEN_MESSAGE;
         }
@@ -120,7 +120,7 @@ public class AddressController {
     @RequestMapping(path="/address/getadminpass/{token}", method=RequestMethod.GET)
     public String getAdminPass(@PathVariable String token) {
         if (token.equals(securityTokenManager.getValueWithReset())) {
-            return  propertiesHandler.getProperty(ControllerConstants.ADDRESS_PASS_KEY);
+            return  propertiesHandler.getProperty(ControllerConstants.PASS_KEY);
         } else {
             return ControllerConstants.NO_TOKEN_MESSAGE;
         }
