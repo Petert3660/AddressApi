@@ -95,7 +95,7 @@ public class AddressController {
         }
     }
 
-    @RequestMapping(path="/deleteAddress/{userId}/{password}/{addressId}/{token}", method=RequestMethod.DELETE)
+    @RequestMapping(path="/deleteAddress/{addressId}/{userId}/{password}/{token}", method=RequestMethod.DELETE)
     public void deleteAddress(@PathVariable String userId, @PathVariable String password, @PathVariable String addressId, @PathVariable String token) {
 
         if (token.equals(securityTokenManager.getValueWithReset())) {
