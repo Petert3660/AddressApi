@@ -60,14 +60,14 @@ public class AddressController {
 
 
     @RequestMapping(path="/savePrimaryAddress/{userId}/{password}/{token}", method=RequestMethod.POST)
-    public void setPrimaryAddress(@RequestBody() Address address, @PathVariable String userId, @PathVariable String password, @PathVariable String token) {
+    public String setPrimaryAddress(@RequestBody() Address address, @PathVariable String userId, @PathVariable String password, @PathVariable String token) {
 
         if (token.equals(securityTokenManager.getValueWithReset())) {
             boolean primaryAddress = false;
             for (AddressEntity entity : addressEntityRepository.findByUserId(address.getUserId())) {
                 primaryAddress = entity.isPrimaryAddress();
                 if (primaryAddress) {
-                    break;
+                    return "Address exists alraedy - not added";
                 }
             }
 
@@ -80,6 +80,8 @@ public class AddressController {
                 }
             }
         }
+
+        return "Address successfully added";
     }
 
     @RequestMapping(path="/saveSecondaryAddress/{userId}/{password}/{token}", method=RequestMethod.POST)
