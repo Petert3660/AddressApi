@@ -104,22 +104,15 @@ public class AddressController {
     }
 
     @RequestMapping(path="/deleteAddress/{addressId}/{userId}/{password}/{token}", method=RequestMethod.DELETE)
-    public String deleteAddress(@PathVariable String userId, @PathVariable String password, @PathVariable String addressId, @PathVariable String token) {
+    public void deleteAddress(@PathVariable String userId, @PathVariable String password, @PathVariable String addressId, @PathVariable String token) {
 
         if (token.equals(securityTokenManager.getValueWithReset())) {
             if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.PASS_KEY))) {
                 List<AddressEntity> entities = addressEntityRepository.findByUserId(Long.parseLong(addressId));
                 if (entities.size() == 1) {
                     addressEntityRepository.delete(entities.get(0));
-                    return "Address successfully deleted";
-                } else {
-                    return "Address not found - not deleted";
                 }
-            } else {
-                return "Authentication failed - address not deleted";
             }
-        } else {
-            return "Security check failed - address not added";
         }
     }
 
