@@ -67,25 +67,26 @@ public class AddressController {
             for (AddressEntity entity : addressEntityRepository.findByUserId(address.getUserId())) {
                 primaryAddress = entity.isPrimaryAddress();
                 if (primaryAddress) {
-                    return "Address exists alraedy - not added";
+                    return "Address exists already - not added";
                 }
             }
 
-            if (!primaryAddress) {
-                AddressEntity addressEntity = new AddressEntity(address.getUserId(), address.getHouseNameNumber(), address.getAddressLine1(), address.getAddressLine2(),
-                    address.getAddressLine3(), address.getAddressLine4(), address.getCounty(), address.getCountry(), address.getPostCode(), true);
+            AddressEntity addressEntity = new AddressEntity(address.getUserId(), address.getHouseNameNumber(), address.getAddressLine1(), address.getAddressLine2(),
+                address.getAddressLine3(), address.getAddressLine4(), address.getCounty(), address.getCountry(), address.getPostCode(), true);
 
-                if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.PASS_KEY))) {
-                    addressEntityRepository.save(addressEntity);
-                }
+            if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.PASS_KEY))) {
+                addressEntityRepository.save(addressEntity);
+                return "Address successfully added";
+            } else {
+                return "Authentication failed - address not added";
             }
+        } else {
+            return "Security check failed - address not added";
         }
-
-        return "Address successfully added";
     }
 
     @RequestMapping(path="/saveSecondaryAddress/{userId}/{password}/{token}", method=RequestMethod.POST)
-    public void setSecondaryAddress(@RequestBody() Address address, @PathVariable String userId, @PathVariable String password, @PathVariable String token) {
+    public String setSecondaryAddress(@RequestBody() Address address, @PathVariable String userId, @PathVariable String password, @PathVariable String token) {
 
         if (token.equals(securityTokenManager.getValueWithReset())) {
             AddressEntity addressEntity = new AddressEntity(address.getUserId(), address.getHouseNameNumber(), address.getAddressLine1(), address.getAddressLine2(),
@@ -93,7 +94,12 @@ public class AddressController {
 
             if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.PASS_KEY))) {
                 addressEntityRepository.save(addressEntity);
+                return "Address successfully added";
+            } else {
+                return "Authentication failed - address not added";
             }
+        } else {
+            return "Security check failed - address not added";
         }
     }
 
