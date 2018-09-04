@@ -19,12 +19,6 @@ public class SecurityTokenManager {
         return securityToken.getValue();
     }
 
-    public String getValueWithReset() {
-        String result = securityToken.getValue();
-        resetToken();
-        return result;
-    }
-
     public boolean isTokenLock() {
         return securityToken.isTokenLock();
     }

@@ -35,7 +35,7 @@ public class AdminController {
     @RequestMapping(path="/shutdown/{id}/{pass}/{token}", method=RequestMethod.POST)
     public void shutdown(@PathVariable String id, @PathVariable String pass, @PathVariable String token) {
         if (id.equals(messageHandler.getMessage(ControllerConstants.ID_KEY)) && pass.equals(messageHandler.getMessage(ControllerConstants.PASS_KEY))
-            && token.equals(securityTokenManager.getValueWithReset())) {
+            && token.equals(securityTokenManager.getValue())) {
 
             System.exit(ControllerConstants.EXIT_STATUS);
         }
@@ -54,7 +54,7 @@ public class AdminController {
 
     @RequestMapping(path="getadminid/{token}", method=RequestMethod.GET)
     public String getAdminId(@PathVariable String token) {
-        if (token.equals(securityTokenManager.getValueWithReset())) {
+        if (token.equals(securityTokenManager.getValue())) {
             return messageHandler.getMessage(ControllerConstants.ID_KEY);
         } else {
             return ControllerConstants.NO_TOKEN_MESSAGE;
@@ -63,7 +63,7 @@ public class AdminController {
 
     @RequestMapping(path="getadminpass/{token}", method=RequestMethod.GET)
     public String getAdminPass(@PathVariable String token) {
-        if (token.equals(securityTokenManager.getValueWithReset())) {
+        if (token.equals(securityTokenManager.getValue())) {
             return messageHandler.getMessage(ControllerConstants.PASS_KEY);
         } else {
             return ControllerConstants.NO_TOKEN_MESSAGE;

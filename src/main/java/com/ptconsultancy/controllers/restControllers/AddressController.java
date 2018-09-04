@@ -36,7 +36,8 @@ public class AddressController {
 
         AddressEntity output = null;
 
-        if (token.equals(securityTokenManager.getValueWithReset())) {
+        if (token.equals(securityTokenManager.getValue())) {
+            securityTokenManager.resetToken();
             for (AddressEntity entity : addressEntityRepository.findByUserId(Long.parseLong(addressId))) {
                 if (entity.isPrimaryAddress()) {
                     output = entity;
@@ -51,7 +52,8 @@ public class AddressController {
     @RequestMapping(path="/getAllUserAddresses/{addressId}/{token}", method=RequestMethod.GET)
     public List<AddressEntity> getAllAddressesForUser(@PathVariable String addressId, @PathVariable String token) {
 
-        if (token.equals(securityTokenManager.getValueWithReset())) {
+        if (token.equals(securityTokenManager.getValue())) {
+            securityTokenManager.resetToken();
             return addressEntityRepository.findByUserId(Long.parseLong(addressId));
         } else {
             return null;
@@ -62,8 +64,9 @@ public class AddressController {
     @RequestMapping(path="/savePrimaryAddress/{userId}/{password}/{token}", method=RequestMethod.POST)
     public String setPrimaryAddress(@RequestBody() Address address, @PathVariable String userId, @PathVariable String password, @PathVariable String token) {
 
-        if (token.equals(securityTokenManager.getValueWithReset())) {
-            boolean primaryAddress = false;
+        if (token.equals(securityTokenManager.getValue())) {
+            securityTokenManager.resetToken();
+            boolean primaryAddress;
             for (AddressEntity entity : addressEntityRepository.findByUserId(address.getUserId())) {
                 primaryAddress = entity.isPrimaryAddress();
                 if (primaryAddress) {
@@ -88,7 +91,8 @@ public class AddressController {
     @RequestMapping(path="/saveSecondaryAddress/{userId}/{password}/{token}", method=RequestMethod.POST)
     public String setSecondaryAddress(@RequestBody() Address address, @PathVariable String userId, @PathVariable String password, @PathVariable String token) {
 
-        if (token.equals(securityTokenManager.getValueWithReset())) {
+        if (token.equals(securityTokenManager.getValue())) {
+            securityTokenManager.resetToken();
             AddressEntity addressEntity = new AddressEntity(address.getUserId(), address.getHouseNameNumber(), address.getAddressLine1(), address.getAddressLine2(),
                 address.getAddressLine3(), address.getAddressLine4(), address.getCounty(), address.getCountry(), address.getPostCode(), false);
 
@@ -106,31 +110,14 @@ public class AddressController {
     @RequestMapping(path="/deleteAddress/{addressId}/{userId}/{password}/{token}", method=RequestMethod.DELETE)
     public void deleteAddress(@PathVariable String userId, @PathVariable String password, @PathVariable String addressId, @PathVariable String token) {
 
-        if (token.equals(securityTokenManager.getValueWithReset())) {
+        if (token.equals(securityTokenManager.getValue())) {
+            securityTokenManager.resetToken();
             if (userId.equals(propertiesHandler.getProperty(ControllerConstants.ID_KEY)) && password.equals(propertiesHandler.getProperty(ControllerConstants.PASS_KEY))) {
                 List<AddressEntity> entities = addressEntityRepository.findByUserId(Long.parseLong(addressId));
                 if (entities.size() == 1) {
                     addressEntityRepository.delete(entities.get(0));
                 }
             }
-        }
-    }
-
-    @RequestMapping(path="/address/getadminid/{token}", method=RequestMethod.GET)
-    public String getAdminId(@PathVariable String token) {
-        if (token.equals(securityTokenManager.getValueWithReset())) {
-            return propertiesHandler.getProperty(ControllerConstants.ID_KEY);
-        } else {
-            return ControllerConstants.NO_TOKEN_MESSAGE;
-        }
-    }
-
-    @RequestMapping(path="/address/getadminpass/{token}", method=RequestMethod.GET)
-    public String getAdminPass(@PathVariable String token) {
-        if (token.equals(securityTokenManager.getValueWithReset())) {
-            return  propertiesHandler.getProperty(ControllerConstants.PASS_KEY);
-        } else {
-            return ControllerConstants.NO_TOKEN_MESSAGE;
         }
     }
 }
