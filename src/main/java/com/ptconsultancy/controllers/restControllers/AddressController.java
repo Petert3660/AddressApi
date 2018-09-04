@@ -2,7 +2,7 @@ package com.ptconsultancy.controllers.restControllers;
 
 import com.ptconsultancy.admin.adminsupport.ControllerConstants;
 import com.ptconsultancy.admin.security.SecurityTokenManager;
-import com.ptconsultancy.domain.Address;
+import com.ptconsultancy.domain.datamodels.Address;
 import com.ptconsultancy.entities.AddressEntity;
 import com.ptconsultancy.repositories.AddressEntityRepository;
 import com.ptconsultancy.utilities.PropertiesHandler;
