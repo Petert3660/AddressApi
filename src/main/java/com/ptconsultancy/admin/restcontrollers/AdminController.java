@@ -55,6 +55,7 @@ public class AdminController {
     @RequestMapping(path="getadminid/{token}", method=RequestMethod.GET)
     public String getAdminId(@PathVariable String token) {
         if (token.equals(securityTokenManager.getValue())) {
+            securityTokenManager.resetToken();
             return messageHandler.getMessage(ControllerConstants.ID_KEY);
         } else {
             return ControllerConstants.NO_TOKEN_MESSAGE;
@@ -64,6 +65,7 @@ public class AdminController {
     @RequestMapping(path="getadminpass/{token}", method=RequestMethod.GET)
     public String getAdminPass(@PathVariable String token) {
         if (token.equals(securityTokenManager.getValue())) {
+            securityTokenManager.resetToken();
             return messageHandler.getMessage(ControllerConstants.PASS_KEY);
         } else {
             return ControllerConstants.NO_TOKEN_MESSAGE;
